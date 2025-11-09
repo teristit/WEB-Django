@@ -212,8 +212,37 @@
     const JUMP_FORCE = -15;
     const MOVE_SPEED = 5;
     const TILE_SIZE = 50;
+
+            // Конфигурация спрайт-шитов
+        const SPRITE_CONFIG = {
+            imagePath: '{% static "images/player_spritesheet.png" %}',  // Путь к спрайт-шиту
+            frameWidth: 40,
+            frameHeight: 60,
+            animations: {
+                'idle_right': { startFrame: 20, endFrame: 20 },
+                'idle_left': { startFrame: 21, endFrame: 21 },
+                'walk_right': { startFrame: 0, endFrame: 7 },
+                'walk_left': { startFrame: 8, endFrame: 15 },
+                'jump_right': { startFrame: 16, endFrame: 16 },
+                'jump_left': { startFrame: 17, endFrame: 17 },
+                'fall_right': { startFrame: 18, endFrame: 18 },
+                'fall_left': { startFrame: 19, endFrame: 19 }
+            }
+        };
+
+        // Загрузка изображения спрайт-шита
+        const playerSpriteSheet = new Image();
+        playerSpriteSheet.src = SPRITE_CONFIG.imagePath;
+        let spriteSheetLoaded = false;
+        playerSpriteSheet.onload = () => {
+            spriteSheetLoaded = true;
+            console.log('Спрайт-шит игрока загружен');
+        };
+        playerSpriteSheet.onerror = () => {
+            console.error('Ошибка загрузки спрайт-шита. Используется процедурная генерация.');
+        };
     
-    // Создание спрайтов для анимации (процедурная генерация)
+            // Рисование игрока с использованием спрайт-шита или процедурной генерации
     function createPlayerSprite(state, frame) {
         const spriteCanvas = document.createElement('canvas');
         spriteCanvas.width = 40;
