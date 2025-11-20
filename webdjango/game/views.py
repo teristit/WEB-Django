@@ -245,3 +245,37 @@ def logout_user(request):
     """Выход пользователя"""
     logout(request)
     return JsonResponse({'status': 'logged_out'})
+
+    
+def get_sprites(request):
+    """API для получения спрайтов из базы данных"""
+    from .models import GameSprite
+    
+    sprites = GameSprite.objects.all()
+    sprites_data = []
+    
+    for sprite in sprites:
+        sprites_data.append({
+            'id': sprite.id,
+            'name': sprite.name,
+            'sprite_type': sprite.sprite_type,
+            'image_url': sprite.image.url if sprite.image else None,
+            'width': sprite.width,
+            'height': sprite.height,
+            'animation_frames': sprite.animation_frames,
+        })
+    
+    return JsonResponse({'sprites': sprites_data})
+
+
+def get_sprite_mapping(request):
+    """API для получения маппинга символов на спрайты"""
+    # Маппинг символов уровня на типы спрайтов
+    mapping = {
+        '#': 'platform',  # Платформа
+        '@': 'item',      # Монета/предмет
+        '(': 'enemy',     # Враг
+        'P': 'player',    # Игрок (если нужно)
+    }
+    
+    return JsonResponse({'mapping': mapping})
