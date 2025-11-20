@@ -114,6 +114,8 @@
             display: none;
         }
     </style>
+        {% load static %}
+        <script src="{% static 'js/sprite_loader.js' %}"></script>
 </head>
 <body>
     <div id="gameContainer">
@@ -387,28 +389,28 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             // Рисуем платформы
-            ctx.fillStyle = '#8B4513';
+            
             for (let platform of gameState.platforms) {
-                ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+                            spriteLoader.renderSprite(ctx, 'platform', platform.x, platform.y, platform.width, platform.height);
             }
             
             // Рисуем предметы для сбора
-            ctx.fillStyle = '#FFD700';
+            
             for (let item of gameState.collectibles) {
                 if (!item.collected) {
-                    ctx.fillRect(item.x, item.y, item.width, item.height);
+                                    spriteLoader.renderSprite(ctx, 'item', item.x, item.y, item.width, item.height);
                 }
             }
             
             // Рисуем врагов
-            ctx.fillStyle = '#FF4500';
+            
             for (let enemy of gameState.enemies) {
-                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                            spriteLoader.renderSprite(ctx, 'enemy', enemy.x, enemy.y, enemy.width, enemy.height);
             }
             
             // Рисуем игрока
-            ctx.fillStyle = gameState.player.facing === 'right' ? '#0000FF' : '#0000AA';
-            ctx.fillRect(gameState.player.x, gameState.player.y, gameState.player.width, gameState.player.height);
+            
+                    spriteLoader.renderSprite(ctx, 'player', gameState.player.x, gameState.player.y, gameState.player.width, gameState.player.height);
         }
         
         // Игровой цикл
@@ -438,12 +440,14 @@
                         gameState.sessionId = data.session_id;
                         gameState.running = true;
                         gameState.score = 0;
+                                            await spriteLoader.init();
                         loadLevel();
                         console.log('Игра начата!');
                     } else {
                         console.log('Нужна авторизация для сохранения прогресса');
                         gameState.running = true;
                         gameState.score = 0;
+                                        gameState.running = true;
                         loadLevel();
                     }
                 } catch (error) {
