@@ -16,7 +16,16 @@
         #ui {display:flex; justify-content:space-between; align-items:center; margin:8px 0; font-size:15px;}
         #controls { background:#eee; border-radius:6px; padding:7px; margin-top:10px;}
         .button-group {display:flex; gap:8px; justify-content:center;}
-        .btn {font-size:14px; padding:8px 12px; border-radius:8px; border:1px solid #888; background:#ddd; cursor:pointer;}
+        .btn {font-size:14px;
+              padding:8px 12px;
+              border-radius:8px;
+              border:1px solid #888;
+              background:#ddd;
+              cursor:pointer;
+              user-select: none;
+              -webkit-user-select: none;
+              -webkit-touch-callout: none;
+             }
         #touch-controls .btn { font-size:16px; min-width:40px; }
         #gameOverScreen { display:none; position:absolute; left:5%; top:10%; width:90%; background:#fff; border:2px solid #333; border-radius:8px; padding:20px; z-index:100;}
         .show {display:block;}
