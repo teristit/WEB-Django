@@ -2,112 +2,42 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Простой платформер - HTML/JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платформер - Простой стиль</title>
     <style>
-        * {margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
-        html, body {width:100%;height:100%;overflow:hidden;}
-        body {
-            font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height:100vh;display:flex;justify-content:center;align-items:center;padding:10px;
-        }
-        #gameContainer {
-            background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:15px;padding:15px;
-            box-shadow:0 8px 32px rgba(31,38,135,0.37);border:1px solid rgba(255,255,255,0.18);
-            width:100%;max-width:900px;display:flex;flex-direction:column;
-        }
-        #gameArea {
-            background:#87CEEB;width:100%;aspect-ratio:16/9;max-height:70vh;
-            border:3px solid white;border-radius:10px;position:relative;overflow:hidden;
-            touch-action:none;
-        }
-        .player {
-            position: absolute;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
-            border-radius:5px;
-            border: 2px solid white;
-            transition: transform 0.1s;
-            /* размеры — только из JS! */
-        }
-        .player::before, .player::after {
-            content:'';position:absolute;top:12%;width:20%;height:16%;background:white;border-radius:50%;
-        }
-        .player::before { left:22%; }
-        .player::after { right:22%; }
-        .platform {
-            position: absolute;
-            background: linear-gradient(to bottom,#8B4513,#654321);
-            border:2px solid #3d2817;border-radius:5px;
-        }
-        .enemy {
-            position: absolute;
-            background: linear-gradient(45deg,#9b59b6,#8e44ad);
-            border-radius:50%;
-            border:2px solid white;
-            animation: enemyFloat 2s ease-in-out infinite;
-        }
-        @keyframes enemyFloat {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-        .collectible {
-            position: absolute;
-            background: linear-gradient(45deg,#f1c40f,#f39c12);
-            border-radius:50%;
-            border:2px solid white;
-            animation:collectibleSpin 3s linear infinite;
-        }
-        @keyframes collectibleSpin {
-            0% { transform: rotate(0deg) scale(1);}
-            50% { transform: rotate(180deg) scale(1.2);}
-            100% { transform: rotate(360deg) scale(1);}
-        }
-        #ui {
-            display: flex;justify-content:space-between;align-items:center;margin-top:12px;
-            color:white;font-weight:bold;font-size:16px;
-        }
-        #controls {
-            background:rgba(255,255,255,0.2);padding:12px;border-radius:10px;
-            margin-top:10px;text-align:center;display:flex;flex-direction:column;gap:8px;
-        }
-        .control-info {color:white;font-size:13px;}
-        .btn {
-            background:linear-gradient(45deg,#667eea,#764ba2);color:white;border:none;
-            padding:12px 16px;border-radius:25px;cursor:pointer;font-size:14px;font-weight:bold;
-            transition:all 0.3s ease;touch-action:manipulation;min-height:44px;
-        }
-        .btn:hover {transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.3);}
-        .btn:active {transform:translateY(0);}
-        .button-group {display:flex;gap:8px;justify-content:center;}
-        .button-group .btn {flex:1;}
-        #touch-controls { margin-top:8px;}
-        #touch-controls .btn {min-width:60px;font-size:20px;min-height:48px;}
-        #gameOverScreen {
-            display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-            background:rgba(255,255,255,0.95);padding:25px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.5);
-            text-align:center;z-index:1000;max-width:90vw;
-        }
-        .show {display:block!important;}
-        h2 {margin-bottom:15px;color:#764ba2;font-size:20px;}
-        .score-display {font-size:18px;color:#667eea;margin:10px 0;}
-        @media (max-width:768px){ #touch-controls .btn{min-width:44px;font-size:16px;min-height:40px;}}
-        @media (max-width:480px){ #touch-controls .btn{min-width:38px;font-size:14px;min-height:36px;}}
+        body, html {margin:0; padding:0; height:100%; box-sizing:border-box;}
+        body {background: #bada55; height:100vh; display:flex; align-items:center; justify-content:center;}
+        #gameContainer { background:#fff; border:2px solid #444; border-radius:8px; padding:12px; box-sizing:border-box; max-width:500px; width:100%;}
+        #gameArea { background:#87ceeb; border:2px solid #444; border-radius:8px; position:relative; width:100%; aspect-ratio:16/9; max-height:60vh; min-height:250px;}
+        .player {position:absolute; background:#f66; border:2px solid #222;}
+        .platform {position:absolute; background:#a52a2a; border:1px solid #333;}
+        .enemy {position:absolute; background:#a3a; border:1px solid #333; border-radius:50%;}
+        .collectible {position:absolute; background:#fc3; border:1px solid #333; border-radius:50%;}
+        #ui {display:flex; justify-content:space-between; align-items:center; margin:8px 0; font-size:15px;}
+        #controls { background:#eee; border-radius:6px; padding:7px; margin-top:10px;}
+        .button-group {display:flex; gap:8px; justify-content:center;}
+        .btn {font-size:14px; padding:8px 12px; border-radius:8px; border:1px solid #888; background:#ddd; cursor:pointer;}
+        #touch-controls .btn { font-size:16px; min-width:40px; }
+        #gameOverScreen { display:none; position:absolute; left:5%; top:10%; width:90%; background:#fff; border:2px solid #333; border-radius:8px; padding:20px; z-index:100;}
+        .show {display:block;}
+        h2 {margin-bottom:8px;}
     </style>
 </head>
 <body>
 <div id="gameContainer">
-    <div id="gameArea">
-        <div class="player" id="player"></div>
-    </div>
+    <div id="gameArea"><div class="player" id="player"></div></div>
     <div id="ui">
         <div>Очки: <span id="score">0</span></div>
         <div>Уровень: <span id="levelName">1</span></div>
     </div>
     <div id="controls">
-        <div class="control-info">← → для движения, ↑ или ПРОБЕЛ для прыжка</div>
+        <div style="margin-bottom:4px;">Управление: ← → ↑ / ПРОБЕЛ или кнопки ниже</div>
         <div class="button-group">
-            <button class="btn" onclick="startGame()">Начать игру</button>
+            <button class="btn" onclick="startGame()">Старт</button>
             <button class="btn" onclick="pauseGame()">Пауза</button>
+            <button class="btn" onclick="resetGame()">Сброс</button>
         </div>
-        <button class="btn" onclick="resetGame()">Перезагрузить</button>
-        <div class="button-group" id="touch-controls">
+        <div class="button-group" id="touch-controls" style="margin-top:8px;">
             <button class="btn" id="btnLeft">←</button>
             <button class="btn" id="btnJump">↑</button>
             <button class="btn" id="btnRight">→</button>
@@ -115,7 +45,7 @@
     </div>
     <div id="gameOverScreen">
         <h2 id="gameOverTitle">Игра окончена!</h2>
-        <p class="score-display" id="finalScore">Ваш счёт: 0</p>
+        <p id="finalScore">Счет: 0</p>
         <p id="gameOverMessage"></p>
         <button class="btn" onclick="restartGame()">Новая игра</button>
     </div>
@@ -277,13 +207,12 @@ function endGame(won,msg){
     gameState.running=false;
     if(gameState.animationId)cancelAnimationFrame(gameState.animationId);
     document.getElementById('gameOverTitle').textContent=won?'Поздравляем!':'Игра окончена!';
-    document.getElementById('finalScore').textContent=`Ваш счёт: ${gameState.score}`;
+    document.getElementById('finalScore').textContent=`Счет: ${gameState.score}`;
     document.getElementById('gameOverMessage').textContent=msg;
     document.getElementById('gameOverScreen').classList.add('show');
 }
-// --- Тач-обработка ---
 window.addEventListener('load',function(){
-    init(); // вызываем обязательно на загрузке
+    init();
     const btnLeft=document.getElementById('btnLeft');
     const btnRight=document.getElementById('btnRight');
     const btnJump=document.getElementById('btnJump');
